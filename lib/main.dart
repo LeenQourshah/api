@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:api_app/screens/comments_screen.dart';
 import 'package:api_app/widgets/post.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +20,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: MyHomePage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => MyHomePage(),
+        '/comment': (context) => const comment(),
+      },
       debugShowCheckedModeBanner: false,
     );
   }

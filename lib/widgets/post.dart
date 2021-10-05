@@ -54,7 +54,9 @@ class Post extends StatelessWidget {
             buttonTwo: headerbutton(
                 buttontext: "comment",
                 buttonicon: Icons.message_outlined,
-                buttonaction: () {},
+                buttonaction: () {
+                  Navigator.pushNamed(context, '/comment');
+                },
                 buttoncolor: Colors.grey),
             buttonThree: headerbutton(
                 buttontext: "share",
