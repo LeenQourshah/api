@@ -1,12 +1,14 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:api_app/models/data_model.dart';
 import 'package:api_app/screens/comments_screen.dart';
 import 'package:api_app/widgets/post.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert' as cnv;
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -36,6 +38,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late List<DataModel> model;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,59 +53,92 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Center(child: Text('Connect')),
       ),
-      body: ListView(
-        children: [
-          Card(
-            elevation: 5,
-            margin: EdgeInsets.all(10),
-            child: Post(
-              //pics: sup,
-              name: "Leen Qourshah",
-              time: "4h",
-              postTitle: "Eid Mubarak Everyone!",
-              like: "27",
-              comments: "9",
-              share: "2",
+      body: model == null
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : ListView.builder(
+              itemBuilder: (BuildContext context, int index) {
+                return Card(
+                  elevation: 5,
+                  margin: EdgeInsets.all(10),
+                  //       child: Post(
+                  //         //pics: sup,
+                  //         name: "Leen Qourshah",
+                  //         time: "4h",
+                  //         postTitle: "Eid Mubarak Everyone!",
+                  //         like: "27",
+                  //         comments: "9",
+                  //         share: "2",
+                  child: Post(
+                      name: 'Leen Qourshah',
+                      time: '4',
+                      share: '3',
+                      postTitle: model[index].body,
+                      like: '3',
+                      comments: ' 6'),
+                  //ExpansionTile(
+                  //   title: Text(model[index].title),
+                  //   children: [Text(model[index].body)],
+                  // ),
+                );
+              },
+              itemCount: model.length,
             ),
-          ),
-          Card(
-            elevation: 5,
-            margin: EdgeInsets.all(10),
-            child: Post(
-              name: "Sara Khaleel",
-              time: "5h",
-              postTitle: "Eid Mubarak Everyone!",
-              like: "30",
-              comments: "10",
-              share: "1",
-            ),
-          ),
-          Card(
-            elevation: 5,
-            margin: EdgeInsets.all(10),
-            child: Post(
-              name: "Sawsan Hakouz",
-              time: "9h",
-              postTitle: "Eid Mubarak Everyone!",
-              like: "27",
-              comments: "20",
-              share: "3",
-            ),
-          ),
-          Card(
-            elevation: 5,
-            margin: EdgeInsets.all(10),
-            child: Post(
-              name: "Jude Qourshah",
-              time: "4h",
-              postTitle: "Enjoy your Eid! happy Eid!",
-              like: "27",
-              comments: "9",
-              share: "2",
-            ),
-          ),
-        ],
-      ),
+
+      // ListView(
+      //   children: [
+      //     Card(
+      //       elevation: 5,
+      //       margin: EdgeInsets.all(10),
+      //       child: Post(
+      //         //pics: sup,
+      //         name: "Leen Qourshah",
+      //         time: "4h",
+      //         postTitle: "Eid Mubarak Everyone!",
+      //         like: "27",
+      //         comments: "9",
+      //         share: "2",
+      //       ),
+      //     ),
+      //     Card(
+      //       elevation: 5,
+      //       margin: EdgeInsets.all(10),
+      //       child: Post(
+      //         name: "Sara Khaleel",
+      //         time: "5h",
+      //         postTitle: "Eid Mubarak Everyone!",
+      //         like: "30",
+      //         comments: "10",
+      //         share: "1",
+      //       ),
+      //     ),
+      //     Card(
+      //       elevation: 5,
+      //       margin: EdgeInsets.all(10),
+      //       child: Post(
+      //         name: "Sawsan Hakouz",
+      //         time: "9h",
+      //         postTitle: "Eid Mubarak Everyone!",
+      //         like: "27",
+      //         comments: "20",
+      //         share: "3",
+      //       ),
+      //     ),
+      //     Card(
+      //       elevation: 5,
+      //       margin: EdgeInsets.all(10),
+      //       child: Post(
+      //         name: "Jude Qourshah",
+      //         time: "4h",
+      //         postTitle: "Enjoy your Eid! happy Eid!",
+      //         like: "27",
+      //         comments: "9",
+      //         share: "2",
+      //       ),
+      //     ),
+      //   ],
+      // ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.deepPurple,
         iconSize: 27,
@@ -115,5 +158,14 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
     );
+  }
+
+  Future<void> getData() async {
+    Uri url = Uri.https('jsonplaceholder.typicode.com', '/posts');
+    http.Response res = await http.get(url);
+    print(res.body);
+    List<dynamic> body = cnv.jsonDecode(res.body);
+    model = body.map((dynamic item) => DataModel.fromJson(item)).toList();
+    setState(() {});
   }
 }

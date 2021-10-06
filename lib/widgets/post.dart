@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:api_app/widgets/header_button_section.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +72,8 @@ class Post extends StatelessWidget {
   Widget titleSection() {
     return postTitle != null && postTitle != ""
         ? Container(
-            padding: EdgeInsets.only(bottom: 15, right: 150),
+            // color: Colors.amber,
+            padding: EdgeInsets.all(10),
             child: Text(
               postTitle == null ? "N/A" : postTitle,
               style: TextStyle(
