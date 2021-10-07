@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:api_app/models/post_model.dart';
 import 'package:api_app/screens/comments_screen.dart';
+import 'package:api_app/screens/search_screen.dart';
 import 'package:api_app/widgets/post.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => MyHomePage(),
         '/comment': (context) => const comment(),
+        '/search': (context) => const searchScreen(),
       },
       debugShowCheckedModeBanner: false,
     );
@@ -44,6 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
   //   getData();
   //   super.initState();
   // }
+  int _currentIndex = 0;
+//List<Widget> bodyList = [widget1, widget2, ...]
 
   @override
   Widget build(BuildContext context) {
@@ -81,63 +85,9 @@ class _MyHomePageState extends State<MyHomePage> {
             } else {
               return Center(child: CircularProgressIndicator());
             }
-          })
-
-      // ListView(
-      //   children: [
-      //     Card(
-      //       elevation: 5,
-      //       margin: EdgeInsets.all(10),
-      //       child: Post(
-      //         //pics: sup,
-      //         name: "Leen Qourshah",
-      //         time: "4h",
-      //         postTitle: "Eid Mubarak Everyone!",
-      //         like: "27",
-      //         comments: "9",
-      //         share: "2",
-      //       ),
-      //     ),
-      //     Card(
-      //       elevation: 5,
-      //       margin: EdgeInsets.all(10),
-      //       child: Post(
-      //         name: "Sara Khaleel",
-      //         time: "5h",
-      //         postTitle: "Eid Mubarak Everyone!",
-      //         like: "30",
-      //         comments: "10",
-      //         share: "1",
-      //       ),
-      //     ),
-      //     Card(
-      //       elevation: 5,
-      //       margin: EdgeInsets.all(10),
-      //       child: Post(
-      //         name: "Sawsan Hakouz",
-      //         time: "9h",
-      //         postTitle: "Eid Mubarak Everyone!",
-      //         like: "27",
-      //         comments: "20",
-      //         share: "3",
-      //       ),
-      //     ),
-      //     Card(
-      //       elevation: 5,
-      //       margin: EdgeInsets.all(10),
-      //       child: Post(
-      //         name: "Jude Qourshah",
-      //         time: "4h",
-      //         postTitle: "Enjoy your Eid! happy Eid!",
-      //         like: "27",
-      //         comments: "9",
-      //         share: "2",
-      //       ),
-      //     ),
-      //   ],
-      // ),
-      ,
+          }),
       bottomNavigationBar: BottomNavigationBar(
+        onTap: (index) => setState(() => _currentIndex = index),
         backgroundColor: Colors.deepPurple,
         iconSize: 27,
         items: <BottomNavigationBarItem>[
@@ -150,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
               title: Text(""),
               backgroundColor: Colors.white),
           BottomNavigationBarItem(
-              icon: Icon(Icons.more_vert_outlined, color: Colors.white),
+              icon: Icon(Icons.search_rounded, color: Colors.white),
               title: Text(""),
               backgroundColor: Colors.white),
         ],
@@ -161,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<List<PostModel>> getData() async {
     Uri url = Uri.https('jsonplaceholder.typicode.com', '/posts');
     http.Response res = await http.get(url);
-    print(res.body);
+    // print(res.body);
     List<dynamic> body = cnv.jsonDecode(res.body);
     model = body.map((dynamic item) => PostModel.fromJson(item)).toList();
     return model;
