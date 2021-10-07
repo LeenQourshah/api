@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:api_app/models/post_model.dart';
 import 'package:api_app/screens/comments_screen.dart';
+import 'package:api_app/screens/home_screen.dart';
+import 'package:api_app/screens/notifications_screen.dart';
 import 'package:api_app/screens/search_screen.dart';
 import 'package:api_app/widgets/post.dart';
 import 'package:flutter/material.dart';
@@ -39,81 +41,62 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late List<PostModel> model;
-
   // @override
   // void initState() {
   //   getData();
   //   super.initState();
   // }
-  int _currentIndex = 0;
-//List<Widget> bodyList = [widget1, widget2, ...]
+  //int _currentIndex = 0;
 
+  // ignore: prefer_final_fields
+  List<Widget> _items = [
+    notificationsScreen(),
+    homeScreen(),
+    searchScreen(),
+  ];
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
-      appBar: AppBar(
-        title: Center(child: Text('Connect')),
-      ),
-      //if data has not come yet, use the circular waiting span
-      body: FutureBuilder<List<PostModel>>(
-          future: getData(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    elevation: 5,
-                    margin: EdgeInsets.all(10),
+        backgroundColor: Colors.grey[200],
+        appBar: AppBar(
+          title: Center(child: Text('Connect')),
+        ),
+        //if data has not come yet, use the circular waiting span
+        body: Center(
+            child: IndexedStack(
+                index: selectedIndex,
+                children: _items) //_items.elementAt(_index),
+            ),
+        bottomNavigationBar: _showBottomNav());
+  }
 
-                    child: Post(
-                        name: 'Leen Qourshah',
-                        time: '4h',
-                        share: '3',
-                        postTitle: model[index].body,
-                        like: ' 3',
-                        comments: ' 6'),
-                    //ExpansionTile(
-                    //   title: Text(model[index].title),
-                    //   children: [Text(model[index].body)],
-                    // ),
-                  );
-                },
-                itemCount: model.length,
-              );
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          }),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (index) => setState(() => _currentIndex = index),
-        backgroundColor: Colors.deepPurple,
-        iconSize: 27,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications, color: Colors.white),
-              title: Text(""),
-              backgroundColor: Colors.white),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home, color: Colors.white),
-              title: Text(""),
-              backgroundColor: Colors.white),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.search_rounded, color: Colors.white),
-              title: Text(""),
-              backgroundColor: Colors.white),
-        ],
-      ),
+  Widget _showBottomNav() {
+    return BottomNavigationBar(
+      onTap: _onTap,
+      currentIndex: selectedIndex,
+      backgroundColor: Colors.deepPurple,
+      iconSize: 27,
+      // ignore: prefer_const_literals_to_create_immutables
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+            icon: Icon(Icons.notifications, color: Colors.white),
+            title: Text(""),
+            backgroundColor: Colors.white),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.home, color: Colors.white),
+            title: Text(""),
+            backgroundColor: Colors.white),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.search_rounded, color: Colors.white),
+            title: Text(""),
+            backgroundColor: Colors.white),
+      ],
     );
   }
 
-  Future<List<PostModel>> getData() async {
-    Uri url = Uri.https('jsonplaceholder.typicode.com', '/posts');
-    http.Response res = await http.get(url);
-    // print(res.body);
-    List<dynamic> body = cnv.jsonDecode(res.body);
-    model = body.map((dynamic item) => PostModel.fromJson(item)).toList();
-    return model;
+  void _onTap(int index) {
+    selectedIndex = index;
+    setState(() {});
   }
 }
