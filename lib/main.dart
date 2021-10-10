@@ -1,14 +1,9 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-import 'package:api_app/models/post_model.dart';
 import 'package:api_app/screens/comments_screen.dart';
 import 'package:api_app/screens/home_screen.dart';
 import 'package:api_app/screens/notifications_screen.dart';
 import 'package:api_app/screens/search_screen.dart';
-import 'package:api_app/services/networking.dart';
-import 'package:api_app/widgets/post.dart';
 import 'package:flutter/material.dart';
-
-import 'package:dio/dio.dart';
 
 void main() {
   runApp(MyApp());

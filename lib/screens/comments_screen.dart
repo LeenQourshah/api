@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:api_app/models/comments_model.dart';
 import 'package:api_app/models/post_model.dart';
 import 'package:api_app/services/networking.dart';

@@ -41,12 +41,34 @@ class homeScreen extends StatelessWidget {
         });
   }
 
+  // Future<List<PostModel>> getData() async {
+  //   print('leen');
+  //   Uri url = Uri.https('jsonplaceholder.typicode.com', '/posts');
+  //   http.Response res = await http.get(url);
+  //   print(res.body);
+  //   List<dynamic> body = cnv.jsonDecode(res.body);
+  //   model = body.map((dynamic item) => PostModel.fromJson(item)).toList();
+  //   return model;
+  // }
+
   Future<List<PostModel>> getData() async {
-    Uri url = Uri.https('jsonplaceholder.typicode.com', '/posts');
-    http.Response res = await http.get(url);
-    print(res.body);
-    List<dynamic> body = cnv.jsonDecode(res.body);
-    model = body.map((dynamic item) => PostModel.fromJson(item)).toList();
-    return model;
+    print('leen');
+
+    final response =
+        await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      final result = cnv.jsonDecode(response.body);
+      model = result.map((dynamic item) => PostModel.fromJson(item)).toList();
+
+      return model;
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      print('ERROR');
+    }
+    return [];
   }
 }
