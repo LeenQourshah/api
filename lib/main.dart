@@ -4,10 +4,11 @@ import 'package:api_app/screens/comments_screen.dart';
 import 'package:api_app/screens/home_screen.dart';
 import 'package:api_app/screens/notifications_screen.dart';
 import 'package:api_app/screens/search_screen.dart';
+import 'package:api_app/services/networking.dart';
 import 'package:api_app/widgets/post.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert' as cnv;
+
+import 'package:dio/dio.dart';
 
 void main() {
   runApp(MyApp());
@@ -49,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //int _currentIndex = 0;
 
   // ignore: prefer_final_fields
+
   List<Widget> _items = [
     notificationsScreen(),
     homeScreen(),

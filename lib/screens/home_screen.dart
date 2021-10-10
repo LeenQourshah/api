@@ -44,7 +44,7 @@ class homeScreen extends StatelessWidget {
   Future<List<PostModel>> getData() async {
     Uri url = Uri.https('jsonplaceholder.typicode.com', '/posts');
     http.Response res = await http.get(url);
-    // print(res.body);
+    print(res.body);
     List<dynamic> body = cnv.jsonDecode(res.body);
     model = body.map((dynamic item) => PostModel.fromJson(item)).toList();
     return model;
