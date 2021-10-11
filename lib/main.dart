@@ -4,9 +4,13 @@ import 'package:api_app/screens/home_screen.dart';
 import 'package:api_app/screens/notifications_screen.dart';
 import 'package:api_app/screens/search_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'services/theme_provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider<DynamicTheme>(
+      create: (_) => DynamicTheme(), child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -51,21 +55,27 @@ class _MyHomePageState extends State<MyHomePage> {
     homeScreen(),
     searchScreen(),
   ];
-  int selectedIndex = 0;
+  int selectedIndex = 1;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.grey[200],
-        appBar: AppBar(
-          title: Center(child: Text('Connect')),
-        ),
-        //if data has not come yet, use the circular waiting span
-        body: Center(
-            child: IndexedStack(
-                index: selectedIndex,
-                children: _items) //_items.elementAt(_index),
-            ),
-        bottomNavigationBar: _showBottomNav());
+    final themeProvider = Provider.of<DynamicTheme>(context);
+
+    return MaterialApp(
+      theme: themeProvider.getDarkMode() ? ThemeData.dark() : ThemeData.light(),
+      home: Scaffold(
+          backgroundColor: Colors.grey[200],
+          appBar: AppBar(
+            backgroundColor: Colors.deepPurple,
+            title: Center(child: Text('Connect')),
+          ),
+          //if data has not come yet, use the circular waiting span
+          body: Center(
+              child: IndexedStack(
+                  index: selectedIndex,
+                  children: _items) //_items.elementAt(_index),
+              ),
+          bottomNavigationBar: _showBottomNav()),
+    );
   }
 
   Widget _showBottomNav() {
