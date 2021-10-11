@@ -55,21 +55,29 @@ class searchScreen extends StatelessWidget {
 
 class DataSearch extends SearchDelegate<String> {
   final names = [
-    "Leen",
-    "Bayan",
-    "Jude",
-    "Juman",
-    "Jawad",
-    "Sara",
-    "Sawsan",
-    "Amjad",
-    "Ahmad",
-    "Leena",
-    "Sumaya",
-    "Tahani",
-    "Fatma",
-    "Mahmoud",
-    "Jumana"
+    "leen",
+    'layan',
+    'bana',
+    "bayan",
+    "jude",
+    "juman",
+    "jawad",
+    "sara",
+    "sawsan",
+    'laith',
+    "amjad",
+    "ahmad",
+    "leena",
+    "sumaya",
+    "tahani",
+    "fatma",
+    'farah',
+    'fadi',
+    'faisal',
+    "mahmoud",
+    'menna',
+    'muna',
+    "jumana"
   ];
 
   @override
@@ -81,24 +89,32 @@ class DataSearch extends SearchDelegate<String> {
   @override
   Widget? buildLeading(BuildContext context) {
     // TODO: implement buildLeading
-    return Icon(Icons.search);
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, ' null');
+      },
+    );
   }
 
   @override
   Widget buildResults(BuildContext context) {
     // TODO: implement buildResults
-    throw UnimplementedError();
+    return Card();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     // TODO: implement buildSuggestions
+    final suggestionList =
+        names.where((element) => element.startsWith(query)).toList();
+
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
         leading: Icon(Icons.person),
-        title: Text(names[index]),
+        title: Text(suggestionList[index]),
       ),
-      itemCount: names.length,
+      itemCount: suggestionList.length,
     );
   }
 }
