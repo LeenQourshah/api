@@ -15,7 +15,12 @@ class searchScreen extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: TextField(
             decoration: InputDecoration(
-                icon: Icon(Icons.search),
+                prefixIcon: IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () {
+                    showSearch(context: context, delegate: DataSearch());
+                  },
+                ),
                 hintText: 'Serach',
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
@@ -30,21 +35,14 @@ class searchScreen extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  ListTile(
-                      title: Text(
-                    'data',
-                    style: TextStyle(fontSize: 20),
-                  )),
-                  ListTile(
-                      title: Text(
-                    'data',
-                    style: TextStyle(fontSize: 20),
-                  )),
-                  ListTile(
-                      title: Text(
-                    'data',
-                    style: TextStyle(fontSize: 20),
-                  )),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                        child: Text(
+                      "Search for a name",
+                      style: TextStyle(fontSize: 20),
+                    )),
+                  )
                 ],
               )
             ],
@@ -52,5 +50,55 @@ class searchScreen extends StatelessWidget {
         )
       ],
     ));
+  }
+}
+
+class DataSearch extends SearchDelegate<String> {
+  final names = [
+    "Leen",
+    "Bayan",
+    "Jude",
+    "Juman",
+    "Jawad",
+    "Sara",
+    "Sawsan",
+    "Amjad",
+    "Ahmad",
+    "Leena",
+    "Sumaya",
+    "Tahani",
+    "Fatma",
+    "Mahmoud",
+    "Jumana"
+  ];
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    // TODO: implement buildActions
+    return [IconButton(onPressed: () {}, icon: Icon(Icons.clear))];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    // TODO: implement buildLeading
+    return Icon(Icons.search);
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // TODO: implement buildResults
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // TODO: implement buildSuggestions
+    return ListView.builder(
+      itemBuilder: (context, index) => ListTile(
+        leading: Icon(Icons.person),
+        title: Text(names[index]),
+      ),
+      itemCount: names.length,
+    );
   }
 }
