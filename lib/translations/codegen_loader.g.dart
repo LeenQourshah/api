@@ -18,13 +18,15 @@ class CodegenLoader extends AssetLoader {
     "Notification1": "لين قورشة أعجبت بتعليقك.",
     "Notification2": "قامت لين قورشه بالتعليق على منشورك.",
     "Notification3": "قامت بيان أمجد بالتعليق على منشورك.",
-    "theme": "قم بتغيير اللون."
+    "theme": "قم بتغيير اللون.",
+    "language": " قم بتغيير اللغة"
   };
   static const Map<String, dynamic> en = {
     "Notification1": "Leen Qourshah liked your comment.",
     "Notification2": "Leen Qourshah commented on your post.",
     "Notification3": " Bayan Amjad commented on your post.",
-    "theme": "Change Theme."
+    "theme": "Change Theme",
+    "language": "Change Language"
   };
   static const Map<String, Map<String, dynamic>> mapLocales = {
     "ar": ar,

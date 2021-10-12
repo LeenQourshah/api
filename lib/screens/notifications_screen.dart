@@ -22,7 +22,7 @@ class _notificationsScreenState extends State<notificationsScreen> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListTile(
-              title: Text('Change Theme'),
+              title: Text(LocaleKeys.theme.tr()),
               trailing: Switch(
                 value: themeProvider.getDarkMode(),
                 onChanged: (value) {
@@ -32,7 +32,7 @@ class _notificationsScreenState extends State<notificationsScreen> {
             ),
           ),
           ListTile(
-            title: Text('Change Language'),
+            title: Text(LocaleKeys.language.tr()),
             trailing: FittedBox(
               //  color: Colors.amber,
               child: Row(

@@ -5,4 +5,5 @@ abstract class LocaleKeys {
   static const Notification2 = 'Notification2';
   static const Notification3 = 'Notification3';
   static const theme = 'theme';
+  static const language = 'language';
 }
