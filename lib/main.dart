@@ -3,14 +3,25 @@ import 'package:api_app/screens/comments_screen.dart';
 import 'package:api_app/screens/home_screen.dart';
 import 'package:api_app/screens/notifications_screen.dart';
 import 'package:api_app/screens/search_screen.dart';
+import 'package:api_app/translations/codegen_loader.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'services/theme_provider.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   runApp(ChangeNotifierProvider<DynamicTheme>(
-      create: (_) => DynamicTheme(), child: MyApp()));
+      create: (_) => DynamicTheme(),
+      child: EasyLocalization(
+        child: MyApp(),
+        path: 'assets/translations',
+        supportedLocales: [Locale('en'), Locale('ar')],
+        fallbackLocale: Locale('en'),
+        assetLoader: CodegenLoader(),
+      )));
 }
 
 class MyApp extends StatelessWidget {
@@ -20,6 +31,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
