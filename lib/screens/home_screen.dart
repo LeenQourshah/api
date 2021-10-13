@@ -4,9 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as cnv;
 
-class homeScreen extends StatelessWidget {
+class homeScreen extends StatefulWidget {
   homeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<homeScreen> createState() => _homeScreenState();
+}
+
+class _homeScreenState extends State<homeScreen> {
   late List<PostModel> model;
+  // @override
+  // void initState() {
+  //   getProduct();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -41,16 +52,6 @@ class homeScreen extends StatelessWidget {
         });
   }
 
-  // Future<List<PostModel>> getData() async {
-  //   print('leen');
-  //   Uri url = Uri.https('jsonplaceholder.typicode.com', '/posts');
-  //   http.Response res = await http.get(url);
-  //   print(res.body);
-  //   List<dynamic> body = cnv.jsonDecode(res.body);
-  //   model = body.map((dynamic item) => PostModel.fromJson(item)).toList();
-  //   return model;
-  // }
-
   Future<List<PostModel>> getData() async {
     print('leen');
 
@@ -61,7 +62,8 @@ class homeScreen extends StatelessWidget {
       // If the server did return a 200 OK response,
       // then parse the JSON.
       final result = cnv.jsonDecode(response.body);
-      model = result.map((dynamic item) => PostModel.fromJson(item)).toList();
+      model =
+          result.data.map((dynamic item) => PostModel.fromJson(item)).toList();
 
       return model;
     } else {
@@ -72,3 +74,25 @@ class homeScreen extends StatelessWidget {
     return [];
   }
 }
+
+// Future<void> getProduct() async {
+//   print('Product');
+
+//   final response =
+//       await http.get(Uri.parse('https://fakestoreapi.com/products'));
+//   if (response.statusCode == 200) {
+//     // If the server did return a 200 OK response,
+//     // then parse the JSON.
+
+//     final result = cnv.jsonDecode(response.body);
+//     //  product = result.map((dynamic item) => PostModel.fromJson(item)).toList();
+//     print(result);
+//     print('response is : ${response.body}');
+
+//     // return model;
+//   } else {
+//     // If the server did not return a 200 OK response,
+//     // then throw an exception.
+//     print('ERROR');
+//   }
+// }
