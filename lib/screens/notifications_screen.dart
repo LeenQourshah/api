@@ -47,7 +47,7 @@ class _notificationsScreenState extends State<notificationsScreen> {
     return Scaffold(
       body: SafeArea(
         child: LayoutBuilder(builder: (context, constraints) {
-          if (constraints.maxWidth < 750) {
+          if (constraints.maxWidth < 700) {
             return ListView(
               children: [
                 Column(
@@ -185,80 +185,171 @@ class _notificationsScreenState extends State<notificationsScreen> {
               ],
             );
           } else {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                // ignore: prefer_const_constructors
-                userProfileBuilder(),
-
-                Column(
-                  children: [
-                    ListView(
-                      children: [
-                        changeTheme(themeProvider),
-                        ListTile(
-                          title: Text(LocaleKeys.language.tr()),
-                          trailing: FittedBox(
-                            //  color: Colors.amber,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-                                // Text('Change Theme'),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: OutlinedButton(
-                                    onPressed: () async {
-                                      await context.setLocale(Locale('en'));
-                                    },
-                                    child: Text(
-                                      "English",
-                                      style:
-                                          TextStyle(color: Colors.deepPurple),
-                                    ),
-                                  ),
+            return ListView(children: [
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          CircleList(
+                            innerRadius: 60,
+                            outerRadius: 90,
+                            origin: Offset(0, 0),
+                            children: List.generate(20, (index) {
+                              return Icon(
+                                Icons.circle,
+                                color: index % 2 == 0
+                                    ? Colors.grey
+                                    : Colors.deepPurple[300],
+                                size: 10,
+                              );
+                            }),
+                            centerWidget: ClipRRect(
+                                // borderRadius: BorderRadius.all(Radius.circular(50)),
+                                child: userProfilePicture()),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Leen Qourshah',
+                            style: TextStyle(fontSize: 25),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                icon: Icon(
+                                  Icons.camera_alt_rounded,
+                                  size: 30,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: OutlinedButton(
-                                    onPressed: () async {
-                                      await context.setLocale(Locale('ar'));
-                                    },
-                                    child: Text(
-                                      "العربية",
-                                      style:
-                                          TextStyle(color: Colors.deepPurple),
-                                    ),
-                                  ),
+                                onPressed: () {
+                                  takeImage();
+                                },
+                              ),
+                              Text(
+                                'Take a picture from your camera',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                icon: Icon(
+                                  Icons.photo,
+                                  size: 30,
                                 ),
-                              ],
+                                onPressed: () {
+                                  pickImage();
+                                },
+                              ),
+                              Text(
+                                'Take a picture from your camera',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            constraints:
+                                BoxConstraints.tightFor(height: 50, width: 330),
+                            // color: Colors.amberAccent,
+                            child: ListTile(
+                              title: Text(
+                                LocaleKeys.theme.tr(),
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              trailing: Switch(
+                                value: themeProvider.getDarkMode(),
+                                onChanged: (value) {
+                                  themeProvider.changeDarkMode(value);
+                                },
+                              ),
                             ),
                           ),
-                        ),
-                        Divider(thickness: 2),
-                        ListTile(
-                          leading: Icon(Icons.notifications),
-                          title: Text(LocaleKeys.Notification1.tr()),
-                        ),
-                        Divider(
-                          thickness: 2,
-                        ),
-                        ListTile(
-                          leading: Icon(Icons.notifications),
-                          title: Text(LocaleKeys.Notification2.tr()),
-                        ),
-                        Divider(
-                          thickness: 2,
-                        ),
-                        ListTile(
-                          leading: Icon(Icons.notifications),
-                          title: Text(LocaleKeys.Notification3.tr()),
-                        ),
-                      ],
-                    )
-                  ],
-                )
-              ],
-            );
+                          Container(
+                            constraints:
+                                BoxConstraints.tightFor(height: 50, width: 350),
+                            child: ListTile(
+                              title: Text(
+                                LocaleKeys.language.tr(),
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              trailing: FittedBox(
+                                //  color: Colors.amber,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    // Text('Change Theme'),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: OutlinedButton(
+                                        onPressed: () async {
+                                          await context.setLocale(Locale('en'));
+                                        },
+                                        child: Text(
+                                          "English",
+                                          style: TextStyle(
+                                              color: Colors.deepPurple),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: OutlinedButton(
+                                        onPressed: () async {
+                                          await context.setLocale(Locale('ar'));
+                                        },
+                                        child: Text(
+                                          "العربية",
+                                          style: TextStyle(
+                                              color: Colors.deepPurple),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    thickness: 2,
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.notifications),
+                    title: Text(LocaleKeys.Notification1.tr()),
+                  ),
+                  Divider(
+                    thickness: 2,
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.notifications),
+                    title: Text(LocaleKeys.Notification2.tr()),
+                  ),
+                  Divider(
+                    thickness: 2,
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.notifications),
+                    title: Text(LocaleKeys.Notification3.tr()),
+                  ),
+                ],
+              ),
+            ]);
           }
         }),
       ),
@@ -304,7 +395,6 @@ class _notificationsScreenState extends State<notificationsScreen> {
           radius: 60,
         ),
       ],
-      // );
     );
   }
 }
