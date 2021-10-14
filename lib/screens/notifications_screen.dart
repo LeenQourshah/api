@@ -9,6 +9,7 @@ import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:circle_list/circle_list.dart';
 
 class notificationsScreen extends StatefulWidget {
   const notificationsScreen({Key? key}) : super(key: key);
@@ -49,7 +50,39 @@ class _notificationsScreenState extends State<notificationsScreen> {
           if (constraints.maxWidth < 750) {
             return ListView(
               children: [
-                userProfilePicture(),
+                Column(
+                  children: [
+                    CircleList(
+                      innerRadius: 60,
+                      outerRadius: 90,
+                      origin: Offset(0, 0),
+                      children: List.generate(20, (index) {
+                        return Icon(
+                          Icons.circle,
+                          color: index % 2 == 0
+                              ? Colors.grey
+                              : Colors.deepPurple[300],
+                          size: 10,
+                        );
+                      }),
+                      centerWidget: ClipRRect(
+                          // borderRadius: BorderRadius.all(Radius.circular(50)),
+                          child: userProfilePicture()),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Leen Qourshah',
+                      style: TextStyle(fontSize: 25),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+
+                //  userProfilePicture(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -247,40 +280,68 @@ class _notificationsScreenState extends State<notificationsScreen> {
     );
   }
 
-  Padding userProfilePicture() {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(children: [
-        image != null
-            ? ClipOval(
-                child: Image.file(image!,
-                    width: 160, height: 160, fit: BoxFit.cover),
-              )
-            : userProfileBuilder(),
-      ]),
-    );
+  Column userProfilePicture() {
+    return Column(children: [
+      image != null
+          ? ClipOval(
+              child: Image.file(image!,
+                  width: 120, height: 120, fit: BoxFit.cover),
+            )
+          : userProfileBuilder(),
+    ]);
   }
 
   Column userProfileBuilder() {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: CircleAvatar(
-            backgroundColor: Colors.deepPurple,
-            child: Icon(
-              Icons.person,
-              size: 80,
-              color: Colors.white,
-            ),
-            radius: 80,
+        CircleAvatar(
+          backgroundColor: Colors.deepPurple,
+          child: Icon(
+            Icons.person,
+            size: 60,
+            color: Colors.white,
           ),
+          radius: 60,
         ),
-        Text(
-          'Leen Qourshah',
-          style: TextStyle(fontSize: 25),
-        )
       ],
+      // );
     );
   }
 }
+
+
+
+// CircleAvatar(
+//             backgroundColor: Colors.deepPurple,
+//             child: Icon(
+//               Icons.person,
+//               size: 80,
+//               color: Colors.white,
+//             ),
+//             radius: 80,
+//           ),
+
+
+//  CircleList(
+//           innerRadius: 70,
+//           outerRadius: 90,
+//           origin: Offset(0, 0),
+//           children: List.generate(20, (index) {
+//             return Icon(
+//               Icons.circle,
+//               color: index % 2 == 0 ? Colors.grey : Colors.deepPurple[300],
+//               size: 10,
+//             );
+//           }),
+//           centerWidget: ClipRRect(
+//               // borderRadius: BorderRadius.all(Radius.circular(70)),
+//               child: CircleAvatar(
+//             backgroundColor: Colors.deepPurple,
+//             child: Icon(
+//               Icons.person,
+//               size: 60,
+//               color: Colors.white,
+//             ),
+//             radius: 60,
+//           )),
+//         ),
