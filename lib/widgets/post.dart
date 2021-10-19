@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:api_app/screens/comments_screen.dart';
 import 'package:api_app/widgets/header_button_section.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -57,6 +58,8 @@ class Post extends StatelessWidget {
                 buttontext: "comment",
                 buttonicon: Icons.message_outlined,
                 buttonaction: () {
+                  // Navigator.push(context, '/comment');
+                  comment();
                   Navigator.pushNamed(context, '/comment');
                 },
                 buttoncolor: Colors.grey),

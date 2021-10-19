@@ -90,6 +90,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
           ),
           bottomNavigationBar: _showBottomNav()),
+      routes: {
+        // '/': (context) => homeScreen(),
+        '/comment': (context) => comment(),
+      },
     );
   }
 

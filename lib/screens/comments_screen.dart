@@ -47,25 +47,13 @@ class _commentState extends State<comment> {
                                   shape: BoxShape.circle,
                                 ),
                               ),
-                              title: Row(
+                              title: Wrap(
                                 children: [
                                   Text(
                                     comment.name,
                                     style: TextStyle(color: Colors.black),
                                   ),
                                   SizedBox(width: 10),
-                                ],
-                              ),
-                              subtitle: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Icon(
-                                    Icons.public,
-                                    color: Colors.grey[700],
-                                    size: 15,
-                                  )
                                 ],
                               ),
                             )

@@ -53,6 +53,9 @@ class _homeScreenState extends State<homeScreen> {
   }
 
   Future<List<PostModel>> getData() async {
+    print(await http
+        .get(Uri.parse('https://jsonplaceholder.typicode.com/posts')));
+
     print('leen');
 
     final response =
@@ -61,9 +64,9 @@ class _homeScreenState extends State<homeScreen> {
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      final result = cnv.jsonDecode(response.body);
+      final result = cnv.json.decode(response.body);
       model =
-          result.data.map((dynamic item) => PostModel.fromJson(item)).toList();
+          result.map<PostModel>((json) => PostModel.fromJson(json)).toList();
 
       return model;
     } else {
