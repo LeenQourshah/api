@@ -1,12 +1,15 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+import 'package:api_app/bloC/posts_bloc.dart';
 import 'package:api_app/providers/theme_provider.dart';
 import 'package:api_app/screens/comments_screen.dart';
 import 'package:api_app/screens/home_screen.dart';
 import 'package:api_app/screens/notifications_screen.dart';
 import 'package:api_app/screens/search_screen.dart';
+import 'package:api_app/services/posts_repo.dart';
 import 'package:api_app/translations/codegen_loader.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -37,13 +40,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      initialRoute: '/',
+      // initialRoute: '/',
       routes: {
-        '/': (context) => MyHomePage(),
+        //  '/': (context) => MyHomePage(),
         '/comment': (context) => const comment(),
         '/search': (context) => const searchScreen(),
       },
       debugShowCheckedModeBanner: false,
+      home: BlocProvider(
+          create: (context) => PostBloc(PostsService()), child: MyHomePage()),
     );
   }
 }
